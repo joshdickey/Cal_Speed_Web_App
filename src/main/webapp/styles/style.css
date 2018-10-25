@@ -1,0 +1,30 @@
+.btn-group button {
+    cursor: pointer; /* Pointer/hand icon */
+   /*float: left; /* Float the buttons side by side */
+    display: inline-block;
+    border: 1px solid black;
+    background-color: #FFFEFE;
+    color: black;
+    height: 150px;
+    width: 100px;
+    margin: 5px;
+    border-radius: 10px;
+
+}
+
+.btn-group1 {
+
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+
