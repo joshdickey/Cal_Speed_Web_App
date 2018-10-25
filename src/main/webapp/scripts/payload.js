@@ -127,8 +127,11 @@ function processMessage(message) {
        textBox.value +=  messageObj.clientName +" Cannot find match.\n";
        //console.log(messageObj.clientName + " cannot find matching cards.");
    }
-    if (messageObj.messageType === "REJECT" && messageObj.playerCount > 1) {
+   if (messageObj.messageType === "REJECT" && messageObj.playerCount > 1) {
         textBox.value += playerName + " tried to place a card but was rejected\n";
+    }
+    if (messageObj.messageType === "WINNER" && messageObj.playerCount > 1) {
+        textBox.value += playerName + " IS THE WINNER!!!\n";
     }
 
    console.log(messageObj);
