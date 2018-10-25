@@ -120,6 +120,7 @@ function processMessage(message) {
    if (messageObj.messageType === "PLACED" && messageObj.playerCount > 1 ) {
        textBox.value += playerName + " placed a card\n";
    }
+  
     if (messageObj.messageType === "MATCH" && messageObj.playerCount > 1){
         textBox.value += playerName + " completed a Match\n";
     }

@@ -249,8 +249,8 @@ public class Game {
             }
             //TODO think about where this goes
             flagMatches();
-
-        }else {
+          
+          }else {
             clientMessage.setMessageType("REJECT");
         }
         if (currPlayer.getHand().getHandCount() == 0){
@@ -293,7 +293,7 @@ public class Game {
                 if (temp.getNumber() == temp2.getNumber() && i != j){
                     temp.addMatch(temp2);
                     temp.setHasMatch(true);
-                    System.out.println("\nflagMatches() " + temp.toString() + " AND " + temp2.toString());
+//                    System.out.println("\nflagMatches() " + temp.toString() + " AND " + temp2.toString());
                 }
                 hashMap.put(prefix + i, temp);
             }
@@ -309,8 +309,11 @@ public class Game {
 
     }
 
+
 /*
     public void checkForMatch(ClientMessage message) {
+
+
 
 
         clientMessage = message;
@@ -347,9 +350,9 @@ public class Game {
         }
 
         updateGame(clientMessage);
-    }
+    }*/
 
-    private void replaceCard(String cardIndex, Player player) {
+   /* private void replaceCard(String cardIndex, Player player) {
         Card playingCard = player.showTopCard();
         Card drawnCard = player.drawOne();
         currentCardClicked = hashMap.get(player.getCurrClick());
@@ -377,9 +380,9 @@ public class Game {
         }
 
 
-    }
+    }*/
 
-    private boolean isMatch(Player player){
+   /* private boolean isMatch(Player player){
        // Card lastClicked = hashMap.get(player.getName()+"Replaced");
 
         if (!player.getLastClick().equals("")){
@@ -404,9 +407,9 @@ public class Game {
             if (comparePlayerClicks(player, player1)) return true;
         }
         return false;
-    }
+    }*/
 
-    private boolean comparePlayerClicks(Player player, Player otherPlayer) {
+   /* private boolean comparePlayerClicks(Player player, Player otherPlayer) {
         if (!otherPlayer.getCurrClick().equals("")){
             if (hashMap.get(player.getCurrClick()).getValue() == hashMap.get(otherPlayer.getCurrClick()).getValue() && !clientMessage.getClientName().equals(otherPlayer.getName())){
                 if (!hashMap.get(player.getCurrClick()).isPlacedOnMatch()){
