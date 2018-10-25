@@ -12,6 +12,9 @@ var currentPlayer = [];
 
 var btnHand1, btnHand2;
 
+// change to false when we upload to azure
+var TESTING = true;
+
 window.onload = function (ev)  {
     console.log("windows on load");
     textMessage = document.getElementById("textMessage");
@@ -63,8 +66,13 @@ function addPlayer(){
 
     if(webSocket == null){
         console.log("Creating socket");
-       // webSocket = new WebSocket("wss://"+ window.location.host +"/websocketServer");
-        webSocket = new WebSocket("wss://webapp-181015200915.azurewebsites.net/websocketServer");
+
+        if (TESTING) {
+            webSocket = new WebSocket("ws://"+ window.location.host +"/websocketServer");
+        }
+        else {
+            webSocket = new WebSocket("wss://webapp-181015200915.azurewebsites.net/websocketServer");
+        }
 
         webSocket.onopen = function (ev) { processOpen(ev) };
         webSocket.onmessage = function (ev) { processMessage(ev) };
