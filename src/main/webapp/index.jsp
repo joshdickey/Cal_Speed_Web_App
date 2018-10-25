@@ -18,7 +18,8 @@
 
 
     <form align="center">
-      <input id="textMessage" type="text">
+
+      <label for="textMessage" id="nameLabel">Player Name: </label><input id="textMessage" type="text">
       <input id="btnJoinGame" onclick="addPlayer()" value="Join Game" type="button">
     </form>
   <br>

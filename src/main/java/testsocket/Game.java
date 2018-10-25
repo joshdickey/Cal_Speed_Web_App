@@ -47,8 +47,9 @@ public class Game {
         clientMessage.setPlayerName1(player1.getName());
 
         //sets messageType to Wait
-
-        System.out.println("updateGame(): " + clientMessage.toString());
+        System.out.println(player1.toString()   + "\n");
+        System.out.println(player2.toString()   + "\n");
+        System.out.println("\nupdateGame(): " + clientMessage.toString());
         //sends payload to clients
         sendToAll(clientMessage);
     }
@@ -248,9 +249,15 @@ public class Game {
             }
             //TODO think about where this goes
             flagMatches();
-           //
-        }else {
+          
+          }else {
             clientMessage.setMessageType("REJECT");
+        }
+        if (currPlayer.getHand().getHandCount() == 0){
+            clientMessage.setMessageType("WINNER");
+        }else{
+            clientMessage.setTopCard1(player1.showTopCard());
+            clientMessage.setTopCard2(player2.showTopCard());
         }
 
         updateGame(clientMessage);
@@ -303,7 +310,10 @@ public class Game {
     }
 
 
-   /* public void checkForMatch(ClientMessage message) {
+/*
+    public void checkForMatch(ClientMessage message) {
+
+
 
 
         clientMessage = message;
