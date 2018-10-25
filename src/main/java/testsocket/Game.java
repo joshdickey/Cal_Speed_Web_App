@@ -242,12 +242,17 @@ public class Game {
             //check to see if player got a match
             if (isThereMatch(currPlayer)) {
                 System.out.println("\n\nMATCH\n\n");
+                clientMessage.setMessageType("MATCH");
+            }else {
+                clientMessage.setMessageType("PLACED");
             }
             //TODO think about where this goes
             flagMatches();
-
+           //
+        }else {
+            clientMessage.setMessageType("REJECT");
         }
-        clientMessage.setMessageType("PLACED");
+
         updateGame(clientMessage);
 
     }

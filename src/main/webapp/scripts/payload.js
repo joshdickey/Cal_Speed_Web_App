@@ -117,10 +117,17 @@ function processMessage(message) {
    if (messageObj.messageType === "PLACED" && messageObj.playerCount > 1 ) {
        textBox.value += playerName + " placed a card\n";
    }
+   if (messageObj.messageType === "MATCH" && messageObj.playerCount > 1){
+       textBox.value += playerName + "completed a Match\n";
+   }
    if (messageObj.messageType === "DEAL"){
        textBox.value +=  messageObj.clientName +" Cannot find match.\n";
        //console.log(messageObj.clientName + " cannot find matching cards.");
    }
+   if (messageObj.messageType === "REJECT" && messageObj.playerCount > 1) {
+       textBox.value += playerName + " tried to place a card but was rejected\n";
+   }
+
    console.log(messageObj);
    if (messageObj.playerCount > 1){
        showHideHand(messageObj);
