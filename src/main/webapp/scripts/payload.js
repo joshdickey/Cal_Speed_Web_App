@@ -118,11 +118,11 @@ function processMessage(message) {
         }
     }
    if (messageObj.messageType === "PLACED" && messageObj.playerCount > 1 ) {
-       textBox.value += playerName + " placed a card\n";
+       textBox.value += playerName + " placed a card: " + messageObj.value + " " + messageObj.value + "\n";
    }
   
     if (messageObj.messageType === "MATCH" && messageObj.playerCount > 1){
-        textBox.value += playerName + " completed a Match\n";
+        textBox.value += playerName + " completed a Match: " + messageObj.topCard1.value + " " + messageObj.topCard2.value + "\n";
     }
    if (messageObj.messageType === "DEAL"){
        textBox.value +=  messageObj.clientName +" Cannot find match.\n";
