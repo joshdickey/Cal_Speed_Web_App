@@ -164,7 +164,7 @@ function setNames(message) {
 
 function updateBoard(message) {
     document.getElementById("btn0").innerText = message.cardsOnBoard1[0].value;
-    document.getElementById("btn0").value = message.cardsOnBoard1[0];
+    //document.getElementById("btn0").value = message.cardsOnBoard1[0];
     document.getElementById("btn1").innerText =  message.cardsOnBoard1[1].value;
     document.getElementById("btn2").innerText =  message.cardsOnBoard1[2].value;
     document.getElementById("btn3").innerText =  message.cardsOnBoard1[3].value;
@@ -173,6 +173,47 @@ function updateBoard(message) {
     document.getElementById("btn5").innerText =  message.cardsOnBoard2[1].value;
     document.getElementById("btn6").innerText =  message.cardsOnBoard2[2].value;
     document.getElementById("btn7").innerText =  message.cardsOnBoard2[3].value;
+
+    // I think this will work, need to test with real cards
+    //$('#btn7').css('background-image', 'url("' + getCardImage(message, 2, 3) +'")');
+}
+
+// can be removed if we can get the suit from the message instead
+function getRandomSuit() {
+    let suitNum = Math.floor(Math.random() * 4);
+    let suit = '';
+    switch (suitNum) {
+        case 0:
+            suit = 'C';
+            break;
+        case 1:
+            suit = 'S';
+            break;
+        case 2:
+            suit = 'H';
+            break;
+        case 3:
+            suit = 'D';
+            break;
+        default:
+            suit = '';
+    }
+}
+
+// return the image path for the given card
+function getCardImage(message, player, index) {
+    // replace if suit info is in message
+    var suit = getRandomSuit();
+    var cardImage = '';
+    // need to know which array to access
+    if (player == 1) {
+        var val = message.cardsOnBoard1[index].value;
+    }
+    else {
+        var val = message.cardsOnBoard2[index].value;
+    }
+    cardImage = '/img/cards/' + suit + val + '.png';
+    return cardImage;
 }
 
 function processClose(message) {
