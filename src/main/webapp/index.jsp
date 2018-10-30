@@ -15,7 +15,9 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
   <body>
+
     <form id="submitForm" align="center">
+
       <label for="textMessage" id="nameLabel">Player Name: </label><input id="textMessage" type="text">
       <input id="btnJoinGame" onclick="addPlayer()" value="Join Game" type="button">
     </form>

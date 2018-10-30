@@ -1,4 +1,4 @@
-package testsocket;
+package speed.model;
 
 public class Player extends Hand{
     private Hand hand;

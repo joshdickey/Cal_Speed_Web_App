@@ -1,21 +1,21 @@
-package testsocket;
+package speed.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Deck {
     private ArrayList<Card> deck = new ArrayList<>();
-    private static Deck instance;
+    //private static Deck instance;
 
     //returns the static Deck object
-    public static Deck getDeck(){
+   /* public static Deck getDeck(){
         if (instance == null){
             instance = new Deck();
         }
         return instance;
-    }
+    }*/
 
-    private Deck() {
+    public Deck() {
 
         //creates and adds 52 cards to the deck
         for (int i = 1; i <= 13; i++) {

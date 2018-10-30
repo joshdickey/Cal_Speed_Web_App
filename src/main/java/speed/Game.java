@@ -1,7 +1,11 @@
-package testsocket;
+package speed;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import speed.model.Card;
+import speed.model.Deck;
+import speed.model.Hand;
+import speed.model.Player;
 
 import javax.websocket.Session;
 import java.io.IOException;
@@ -12,7 +16,7 @@ import java.util.List;
 public class Game {
     private static Game instance = null;
     private ClientMessage clientMessage = ClientMessage.getInstance();
-    private Deck deck = Deck.getDeck();
+    private Deck deck;
     private static Player player1, player2;
 
     private List<Session> sessions = new ArrayList<>();
@@ -47,8 +51,9 @@ public class Game {
         clientMessage.setPlayerName1(player1.getName());
 
         //sets messageType to Wait
-
-        System.out.println("updateGame(): " + clientMessage.toString());
+        System.out.println(player1.toString()   + "\n");
+        System.out.println(player2.toString()   + "\n");
+        System.out.println("\nupdateGame(): " + clientMessage.toString());
         //sends payload to clients
         sendToAll(clientMessage);
     }
@@ -116,7 +121,7 @@ public class Game {
         totalBoardhand1 = new Hand();
 
         hashMap = new HashMap<>();
-
+        deck = new Deck();
         //deal to both players
         for (int i = 0; i < 26; i++){
             hand.addCardToHand(deck.deal());
@@ -242,12 +247,23 @@ public class Game {
             //check to see if player got a match
             if (isThereMatch(currPlayer)) {
                 System.out.println("\n\nMATCH\n\n");
+                clientMessage.setMessageType("MATCH");
+            }else {
+                clientMessage.setMessageType("PLACED");
             }
             //TODO think about where this goes
             flagMatches();
-
+          
+          }else {
+            clientMessage.setMessageType("REJECT");
         }
-        clientMessage.setMessageType("PLACED");
+        if (currPlayer.getHand().getHandCount() == 0){
+            clientMessage.setMessageType("WINNER");
+        }else{
+            clientMessage.setTopCard1(player1.showTopCard());
+            clientMessage.setTopCard2(player2.showTopCard());
+        }
+
         updateGame(clientMessage);
 
     }
@@ -281,7 +297,7 @@ public class Game {
                 if (temp.getNumber() == temp2.getNumber() && i != j){
                     temp.addMatch(temp2);
                     temp.setHasMatch(true);
-                    System.out.println("\nflagMatches() " + temp.toString() + " AND " + temp2.toString());
+//                    System.out.println("\nflagMatches() " + temp.toString() + " AND " + temp2.toString());
                 }
                 hashMap.put(prefix + i, temp);
             }
@@ -298,7 +314,15 @@ public class Game {
     }
 
 
+    private void resetGame(ClientMessage message){
+        player1.getHand().setHandCount(0);
+        player2.getHand().setHandCount(0);
+
+    }
+/*
     public void checkForMatch(ClientMessage message) {
+
+
 
 
         clientMessage = message;
@@ -335,9 +359,9 @@ public class Game {
         }
 
         updateGame(clientMessage);
-    }
+    }*/
 
-    private void replaceCard(String cardIndex, Player player) {
+   /* private void replaceCard(String cardIndex, Player player) {
         Card playingCard = player.showTopCard();
         Card drawnCard = player.drawOne();
         currentCardClicked = hashMap.get(player.getCurrClick());
@@ -365,9 +389,9 @@ public class Game {
         }
 
 
-    }
+    }*/
 
-    private boolean isMatch(Player player){
+   /* private boolean isMatch(Player player){
        // Card lastClicked = hashMap.get(player.getName()+"Replaced");
 
         if (!player.getLastClick().equals("")){
@@ -392,9 +416,9 @@ public class Game {
             if (comparePlayerClicks(player, player1)) return true;
         }
         return false;
-    }
+    }*/
 
-    private boolean comparePlayerClicks(Player player, Player otherPlayer) {
+   /* private boolean comparePlayerClicks(Player player, Player otherPlayer) {
         if (!otherPlayer.getCurrClick().equals("")){
             if (hashMap.get(player.getCurrClick()).getValue() == hashMap.get(otherPlayer.getCurrClick()).getValue() && !clientMessage.getClientName().equals(otherPlayer.getName())){
                 if (!hashMap.get(player.getCurrClick()).isPlacedOnMatch()){
@@ -408,7 +432,7 @@ public class Game {
             }
         }
         return false;
-    }
+    }*/
 
     public static Player getPlayer1() {
         return player1;
