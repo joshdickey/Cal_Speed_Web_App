@@ -6,13 +6,15 @@ public class ClientMessage {
 
     private static ClientMessage instance = null;
     String messageType;
-    String clientName;
+    public String clientName;
     int playerCount;
-    String playerName1, playerName2;
+    public String playerName1;
+    public String playerName2;
     ArrayList<Card> cardsOnBoard1, cardsOnBoard2;
     public boolean deal;
     Card topCard1, topCard2;
-    String placedOnCard, placedOnValue;
+    public String placedOnCard;
+    String placedOnValue;
 
 
     public static ClientMessage getInstance() {

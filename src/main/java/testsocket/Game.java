@@ -1,7 +1,12 @@
-package testsocket;
+package speed;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import speed.ClientMessage;
+import speed.model.Card;
+import speed.model.Deck;
+import speed.model.Hand;
+import speed.model.Player;
 
 import javax.websocket.Session;
 import java.io.IOException;
@@ -12,7 +17,9 @@ import java.util.List;
 public class Game {
     private static Game instance = null;
     private ClientMessage clientMessage = ClientMessage.getInstance();
-    private Deck deck = Deck.getDeck();
+   // private Deck deck = Deck.getDeck();
+    private Deck deck = new Deck();
+
     private static Player player1, player2;
 
     private List<Session> sessions = new ArrayList<>();
