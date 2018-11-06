@@ -16,20 +16,20 @@ var btnHand1, btnHand2;
 // change to false when we upload to azure
 var TESTING = true;
 
+var messageObj = {};
+
 window.onload = function (ev)  {
     console.log("windows on load");
     textMessage = document.getElementById("textMessage");
     btnjoingame = document.getElementById("btnJoinGame");
     console.log("windows on load");
-    btnDeal1 = document.getElementById("btnDeal");
+    btnDeal1 = document.getElementById("btnDeal1");
     btnDeal2 = document.getElementById("btnDeal2");
     console.log("Deal buttons loaded");
     textBox = document.getElementById("textBox");
 
     nameLabel = document.getElementById("nameLabel");
 
-    btnDeal1 = document.getElementById("btnDeal");
-    btnDeal2 = document.getElementById("btnDeal2");
     btnHand1 = document.getElementById("btnHand1");
     btnHand2 = document.getElementById("btnHand2");
 
@@ -62,11 +62,13 @@ function addPlayer(){
 
     if(name === ''){ name = "Guest";}
 
-
+    /*
     textMessage.value = '';
     textMessage.style.visibility = "hidden";
     btnjoingame.style.visibility = "hidden";
     nameLabel.style.visibility = "hidden";
+    */
+    $('#submitDiv').toggle();
 
     if(webSocket == null){
         console.log("Creating socket");
@@ -90,16 +92,16 @@ function processOpen(message) {
 
     var player = { messageType: "JOIN", clientName: name };
     webSocket.send(JSON.stringify(player));
-    console.log("processOpen: " + name);
+    /*console.log("processOpen: " + name);*/
 }
 
 function processMessage(message) {
 
     //convert JSON to an Object
     messageObj = JSON.parse(message.data);
-    console.log(JSON.stringify(message.data));
+    /*console.log(JSON.stringify(message.data));
     console.log("processMessage: player1: " + messageObj.playerName1);
-    console.log("processMessage: player2: " + messageObj.playerName2);
+    console.log("processMessage: player2: " + messageObj.playerName2);*/
 
 
   //  currentPlayer[1] =  messageObj.playerName2;
@@ -108,35 +110,37 @@ function processMessage(message) {
  //   console.log(messageObj.cardsOnBoard2);
 
     var playerName = messageObj.clientName;
+    var messageType = messageObj.messageType;
+    var playerCount = messageObj.playerCount;
 
-    if (messageObj.messageType === "JOIN" ){
+    if (messageType === "JOIN" ){
 
         textBox.value += playerName + " has joined the game.\n";
         setNames(messageObj);
-        if (messageObj.playerCount === 1) {
+        if (playerCount === 1) {
             textBox.value += "Waiting on Player 2 to join.\n";
         }
     }
-   if (messageObj.messageType === "PLACED" && messageObj.playerCount > 1 ) {
+   if (messageType === "PLACED" && playerCount > 1 ) {
        textBox.value += playerName + " placed a card: " + messageObj.value + " " + messageObj.value + "\n";
    }
   
-    if (messageObj.messageType === "MATCH" && messageObj.playerCount > 1){
+    if (messageType === "MATCH" && playerCount > 1){
         textBox.value += playerName + " completed a Match: " + messageObj.topCard1.value + " " + messageObj.topCard2.value + "\n";
     }
-   if (messageObj.messageType === "DEAL"){
+   if (messageType === "DEAL"){
        textBox.value +=  messageObj.clientName +" Cannot find match.\n";
        //console.log(messageObj.clientName + " cannot find matching cards.");
    }
-   if (messageObj.messageType === "REJECT" && messageObj.playerCount > 1) {
+   if (messageType === "REJECT" && playerCount > 1) {
         textBox.value += playerName + " tried to place a card but was rejected\n";
     }
-    if (messageObj.messageType === "WINNER" && messageObj.playerCount > 1) {
+    if (messageType === "WINNER" && playerCount > 1) {
         textBox.value += playerName + " IS THE WINNER!!!\n";
     }
 
    console.log(messageObj);
-   if (messageObj.playerCount > 1){
+   if (playerCount > 1){
        showHideHand(messageObj);
        setNames(messageObj);
        updateBoard(messageObj);
@@ -144,13 +148,18 @@ function processMessage(message) {
 }
 
 function showHideHand(message) {
-    console.log("Name: " + name + " Playername1: " + message.playerName1 + " Playername2: " + message.playerName2);
+    /*if (message != null) {
+        return;
+    }*/
+    //console.log("Name: " + name + " Playername1: " + message.playerName1 + " Playername2: " + message.playerName2);
     if (name === message.playerName1){
         btnHand1.style.visibility = "visible";
         btnDeal1.style.visibility = "visible";
+
     }
 
     if (name === message.playerName2){
+
         btnHand2.style.visibility = "visible";
         btnDeal2.style.visibility = "visible";
     }
@@ -164,7 +173,6 @@ function setNames(message) {
 
 function updateBoard(message) {
     document.getElementById("btn0").innerText = message.cardsOnBoard1[0].value;
-    //document.getElementById("btn0").value = message.cardsOnBoard1[0];
     document.getElementById("btn1").innerText =  message.cardsOnBoard1[1].value;
     document.getElementById("btn2").innerText =  message.cardsOnBoard1[2].value;
     document.getElementById("btn3").innerText =  message.cardsOnBoard1[3].value;
@@ -174,36 +182,10 @@ function updateBoard(message) {
     document.getElementById("btn6").innerText =  message.cardsOnBoard2[2].value;
     document.getElementById("btn7").innerText =  message.cardsOnBoard2[3].value;
 
-    // I think this will work, need to test with real cards
-    //$('#btn7').css('background-image', 'url("' + getCardImage(message, 2, 3) +'")');
-}
-
-// can be removed if we can get the suit from the message instead
-function getRandomSuit() {
-    let suitNum = Math.floor(Math.random() * 4);
-    let suit = '';
-    switch (suitNum) {
-        case 0:
-            suit = 'C';
-            break;
-        case 1:
-            suit = 'S';
-            break;
-        case 2:
-            suit = 'H';
-            break;
-        case 3:
-            suit = 'D';
-            break;
-        default:
-            suit = '';
-    }
 }
 
 // return the image path for the given card
 function getCardImage(message, player, index) {
-    // replace if suit info is in message
-    var suit = getRandomSuit();
     var cardImage = '';
     // need to know which array to access
     if (player == 1) {
@@ -212,7 +194,7 @@ function getCardImage(message, player, index) {
     else {
         var val = message.cardsOnBoard2[index].value;
     }
-    cardImage = '/img/cards/' + suit + val + '.png';
+    cardImage = '/img/cards/' + message.suit + val + '.png';
     return cardImage;
 }
 
@@ -243,13 +225,13 @@ function playOnMatch(button) {
         if (messageObj.clientName === messageObj.playerName1) {
 
             for (var i = 0;i < 4;i++) {
-                console.log("In hand: "+ messageObj.topCard1.value + " : " + messageObj.cardsOnBoard1[i].value + " " + messageObj.cardsOnBoard2[i].value);
+                //console.log("In hand: "+ messageObj.topCard1.value + " : " + messageObj.cardsOnBoard1[i].value + " " + messageObj.cardsOnBoard2[i].value);
             }
         }
         if (messageObj.clientName === messageObj.playerName2) {
 
             for (var i = 0;i < 4;i++) {
-                console.log("In hand: "+ messageObj.topCard2.value + " : " + messageObj.cardsOnBoard1[i].value + " " + messageObj.cardsOnBoard2[i].value);
+                //console.log("In hand: "+ messageObj.topCard2.value + " : " + messageObj.cardsOnBoard1[i].value + " " + messageObj.cardsOnBoard2[i].value);
             }
         }
         messageObj.placedOnCard = button.id;
