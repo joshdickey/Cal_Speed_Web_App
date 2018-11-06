@@ -8,9 +8,13 @@ var btnjoingame;
 
 var playerName1;
 var playerName2;
+var nameLabel;
 var currentPlayer = [];
 
 var btnHand1, btnHand2;
+
+// change to false when we upload to azure
+var TESTING = true;
 
 window.onload = function (ev)  {
     console.log("windows on load");
@@ -21,6 +25,8 @@ window.onload = function (ev)  {
     btnDeal2 = document.getElementById("btnDeal2");
     console.log("Deal buttons loaded");
     textBox = document.getElementById("textBox");
+
+    nameLabel = document.getElementById("nameLabel");
 
     btnDeal1 = document.getElementById("btnDeal");
     btnDeal2 = document.getElementById("btnDeal2");
@@ -54,17 +60,23 @@ function addPlayer(){
     name = textMessage.value.trim();
 
 
-    if(name == ''){ name = "Guest";}
+    if(name === ''){ name = "Guest";}
 
 
     textMessage.value = '';
     textMessage.style.visibility = "hidden";
     btnjoingame.style.visibility = "hidden";
+    nameLabel.style.visibility = "hidden";
 
     if(webSocket == null){
         console.log("Creating socket");
-       // webSocket = new WebSocket("wss://"+ window.location.host +"/websocketServer");
-        webSocket = new WebSocket("wss://webapp-181015200915.azurewebsites.net/websocketServer");
+
+        if (TESTING) {
+            webSocket = new WebSocket("ws://"+ window.location.host +"/websocketServer");
+        }
+        else {
+            webSocket = new WebSocket("wss://webapp-181015200915.azurewebsites.net/websocketServer");
+        }
 
         webSocket.onopen = function (ev) { processOpen(ev) };
         webSocket.onmessage = function (ev) { processMessage(ev) };
@@ -85,7 +97,7 @@ function processMessage(message) {
 
     //convert JSON to an Object
     messageObj = JSON.parse(message.data);
-    console.log(JSON.stringify(message.data))
+    console.log(JSON.stringify(message.data));
     console.log("processMessage: player1: " + messageObj.playerName1);
     console.log("processMessage: player2: " + messageObj.playerName2);
 
@@ -105,14 +117,24 @@ function processMessage(message) {
             textBox.value += "Waiting on Player 2 to join.\n";
         }
     }
-
    if (messageObj.messageType === "PLACED" && messageObj.playerCount > 1 ) {
        textBox.value += playerName + " placed a card\n";
    }
+  
+    if (messageObj.messageType === "MATCH" && messageObj.playerCount > 1){
+        textBox.value += playerName + " completed a Match\n";
+    }
    if (messageObj.messageType === "DEAL"){
        textBox.value +=  messageObj.clientName +" Cannot find match.\n";
        //console.log(messageObj.clientName + " cannot find matching cards.");
    }
+   if (messageObj.messageType === "REJECT" && messageObj.playerCount > 1) {
+        textBox.value += playerName + " tried to place a card but was rejected\n";
+    }
+    if (messageObj.messageType === "WINNER" && messageObj.playerCount > 1) {
+        textBox.value += playerName + " IS THE WINNER!!!\n";
+    }
+
    console.log(messageObj);
    if (messageObj.playerCount > 1){
        showHideHand(messageObj);
@@ -163,20 +185,16 @@ function processError(message) {
     textBox.value += "error..."+"\n";
 }
 
-function cardPut(button) {
+/*function cardPut(button) {
     var cardValue = button.value;
     payload += " " + cardValue + " " + button.id;
     webSocket.send(payload);
     payload = "";
-}
+}*/
 
 function drawFromHand(button) {
-    var cardValue = button.value;
-    payload = cardValue;
-
     messageObj.messageType = "DRAW";
-    
-    console.log(messageObj);
+    //console.log(messageObj);
 }
 
 function playOnMatch(button) {
@@ -196,7 +214,7 @@ function playOnMatch(button) {
         messageObj.placedOnCard = button.id;
         messageObj.placedOnValue = button.innerText;
 
-        webSocket.send(JSON.stringify(messageObj))
+        webSocket.send(JSON.stringify(messageObj));
     }
     
     messageObj.messageType = "WAIT";

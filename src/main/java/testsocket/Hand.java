@@ -73,8 +73,8 @@ public class Hand {
     @Override
     public String toString() {
         return "Hand{" +
-                "playersHand=" + playersHand +
                 ", handCount=" + handCount +
+                "playersHand=" + playersHand +
                 '}';
     }
 
