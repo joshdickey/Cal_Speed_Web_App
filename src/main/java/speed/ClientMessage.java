@@ -1,4 +1,6 @@
-package testsocket;
+package speed;
+
+import speed.model.Card;
 
 import java.util.ArrayList;
 

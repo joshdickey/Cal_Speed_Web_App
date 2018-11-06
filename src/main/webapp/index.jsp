@@ -14,7 +14,7 @@
   <body>
   <script src="scripts/payload.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script sec="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
     <form align="center">
@@ -37,7 +37,7 @@
         <br><br>
         <div class="btn-group" style="width:100%">
           <button id="btnHand1" style="width:25%" onclick="drawFromHand(this)" value="4">Hand</button>
-          <button id="btnDeal" style="width:25%" onclick="deal();">Deal</button>
+          <button id="btnDeal1" style="width:25%" onclick="deal();">Deal</button>
         </div>
       </div>
       <div style="width: 40%; float: right;" align="center">

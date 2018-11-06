@@ -21,15 +21,15 @@ window.onload = function (ev)  {
     textMessage = document.getElementById("textMessage");
     btnjoingame = document.getElementById("btnJoinGame");
     console.log("windows on load");
-    btnDeal1 = document.getElementById("btnDeal");
+    //btnDeal1 = document.getElementById("btnDeal");
+    //btnDeal2 = document.getElementById("btnDeal2");
+    btnDeal1 = document.getElementById("btnDeal1");
     btnDeal2 = document.getElementById("btnDeal2");
     console.log("Deal buttons loaded");
     textBox = document.getElementById("textBox");
 
     nameLabel = document.getElementById("nameLabel");
 
-    btnDeal1 = document.getElementById("btnDeal");
-    btnDeal2 = document.getElementById("btnDeal2");
     btnHand1 = document.getElementById("btnHand1");
     btnHand2 = document.getElementById("btnHand2");
 
@@ -44,7 +44,7 @@ window.onload = function (ev)  {
     btnHand1.style.visibility = "hidden";
     btnHand2.style.visibility = "hidden";
 
-};
+}
 
 function deal() {
     console.log("deal(): player cannot find match");

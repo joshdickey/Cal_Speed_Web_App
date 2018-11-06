@@ -1,4 +1,4 @@
-package testsocket;
+package speed.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +15,7 @@ public class Deck {
         return instance;
     }
 
-    private Deck() {
+    public Deck() {
 
         //creates and adds 52 cards to the deck
         for (int i = 1; i <= 13; i++) {

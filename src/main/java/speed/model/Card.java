@@ -1,4 +1,4 @@
-package testsocket;
+package speed.model;
 
 import java.util.ArrayList;
 import java.util.List;

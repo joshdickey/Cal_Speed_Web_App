@@ -2,7 +2,6 @@ package speed;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import speed.ClientMessage;
 import speed.model.Card;
 import speed.model.Deck;
 import speed.model.Hand;
