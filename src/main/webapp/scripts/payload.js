@@ -175,6 +175,7 @@ function updateBoard(message) {
     //TODO remove all these unless you want to keep them
     //TODO uncomment these when you want to test the suits
 
+
     // document.getElementById("btn0").innerText = message.cardsOnBoard1[0].suit + message.cardsOnBoard1[0].value;
     // document.getElementById("btn1").innerText =  message.cardsOnBoard1[1].suit + message.cardsOnBoard1[1].value;
     // document.getElementById("btn2").innerText =  message.cardsOnBoard1[2].suit + message.cardsOnBoard1[2].value;
@@ -184,6 +185,7 @@ function updateBoard(message) {
     // document.getElementById("btn5").innerText =  message.cardsOnBoard2[1].suit + message.cardsOnBoard2[1].value;
     // document.getElementById("btn6").innerText =  message.cardsOnBoard2[2].suit + message.cardsOnBoard2[2].value;
     // document.getElementById("btn7").innerText = message.cardsOnBoard2[3].suit + message.cardsOnBoard2[3].value;
+
 
 
     $('#btn0').css('background-image', 'url(' + getCardImage(message,1,0) + ')');
@@ -213,6 +215,7 @@ function getCardImage(message, player, index) {
 
    // console.log("card  "+suit + val);
     cardImage = '/img/cards/' + suit + val + '.png';
+
     return cardImage;
 }
 
