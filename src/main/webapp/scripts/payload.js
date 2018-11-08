@@ -77,7 +77,7 @@ function addPlayer(){
             webSocket = new WebSocket("ws://"+ window.location.host +"/websocketServer");
         }
         else {
-            webSocket = new WebSocket("wss://webapp-181015200915.azurewebsites.net/websocketServer");
+            webSocket = new WebSocket("wss://californiaspeed.azurewebsites.net/websocketServer");
         }
 
         webSocket.onopen = function (ev) { processOpen(ev) };
@@ -136,7 +136,7 @@ function processMessage(message) {
         textBox.value += playerName + " tried to place a card but was rejected\n";
     }
     if (messageType === "WINNER" && playerCount > 1) {
-        textBox.value += playerName + " IS THE WINNER!!!\n";
+        textBox.value += messageObj.winner + " IS THE WINNER!!!\n";
     }
 
    console.log(messageObj);

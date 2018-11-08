@@ -55,13 +55,20 @@
 }
 
 .playerDiv {
-    width: 40%;
+    width: 25%;
     border: 5px solid black;
+    float: left;
+}
+
+.player2Div {
+    width: 25%;
+    border: 5px solid black;
+    float: left;
 }
 
 .column {
     float: left;
-    width: 30%;
+    width: 45%;
     text-align: center;
 }
 

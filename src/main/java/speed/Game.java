@@ -151,8 +151,20 @@ public class Game {
             //players deal 4 each on board
             for (int i = 0; i < 4; i++) {
 
-                Card temp1 = player1.drawOne();
-                Card temp2 = player2.drawOne();
+                Card temp1 = null;
+                Card temp2 = null;
+                if (player1.getHand().getHandCount() > 1 ) {
+                    temp1 = player1.drawOne();
+                }else{
+                    clientMessage.setMessageType("WINNER");
+                    clientMessage.setWinner(player1.getName());
+                }
+                if (player2.getHand().getHandCount() > 1 ) {
+                    temp2 = player2.drawOne();
+                }else{
+                    clientMessage.setMessageType("WINNER");
+                    clientMessage.setWinner(player2.getName());
+                }
 
                 //adds cards from players hand to boardHand
                 boardHand1.addCardToHand(temp1);
@@ -167,13 +179,13 @@ public class Game {
 
             }
 
-            flagMatches();
 
-            System.out.println("dealCards() HashMap: " + hashMap);
+            if(clientMessage.getWinner().equals("")){
+                flagMatches();
+                System.out.println("dealCards() HashMap: " + hashMap);
+            }
 
-            //set the 8 cards that go on the board in the payload to be sent to the client
-           // clientMessage.setCardsOnBoard1(boardHand1.getPlayersHand());
-           // clientMessage.setCardsOnBoard2(boardhand2.getPlayersHand());
+
             //flag that the players are no longer ready to deal out cards
             player1.setDeal(false);
             player2.setDeal(false);
@@ -183,6 +195,7 @@ public class Game {
 
         }
 
+        //set the 8 cards that go on the board in the payload to be sent to the client
         clientMessage.setTopCard1(player1.showTopCard());
         clientMessage.setTopCard2(player2.showTopCard());
         updateGame(clientMessage);
@@ -259,6 +272,7 @@ public class Game {
         }
         if (currPlayer.getHand().getHandCount() == 0){
             clientMessage.setMessageType("WINNER");
+            clientMessage.setWinner(currPlayer.getName());
         }else{
             clientMessage.setTopCard1(player1.showTopCard());
             clientMessage.setTopCard2(player2.showTopCard());
