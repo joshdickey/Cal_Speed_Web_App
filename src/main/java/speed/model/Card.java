@@ -9,10 +9,12 @@ public class Card {
     private boolean placedOnMatch;
     private boolean hasMatch;
     private transient List<Card> matches;
+    private String suit;
 
     public Card() {
         number = -1;
         value = "-1";
+        suit = "H";
         placedOnMatch = false;
         hasMatch = false;
         matches = new ArrayList<>();
@@ -89,6 +91,14 @@ public class Card {
         return this.number - otherCard.number;
     }
 
+    public String getSuit() {
+        return suit;
+    }
+
+    public void setSuit(String suit) {
+        this.suit = suit;
+    }
+
     @Override
     public String toString() {
 
@@ -96,6 +106,7 @@ public class Card {
         return "Card{" +
                 "number=" + number +
                 ", value='" + value + '\'' +
+                ", suit='" + suit + '\'' +
                 ", placedOnMatch=" + placedOnMatch +
                 ", hasMatch=" + hasMatch +
 //                ", matches=" + matches +

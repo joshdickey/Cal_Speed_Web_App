@@ -27,7 +27,7 @@
         <textarea id="textBox" readonly ></textarea>
     </div>
     <div id="row" class="container">
-        <div id="p1Side" class="column playerDiv">
+        <div id="p1Side" class="playerDiv">
             <div id="playerName1" class="playerName" align="center">
                 <h2>Player 1</h2>
             </div>
@@ -52,7 +52,8 @@
                 <button id="btn7" class="card" onclick="playOnMatch(this)"></button>
             </div>
         </div>
-        <div id="p2Side" class="column playerDiv">
+
+        <div id="p2Side" class="player2Div">
             <div id="playerName2" class="playerName" align="center">
                 <h2>Player 2</h2>
             </div>
