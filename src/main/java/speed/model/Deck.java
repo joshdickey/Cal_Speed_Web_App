@@ -16,15 +16,32 @@ public class Deck {
     }*/
 
     public Deck() {
-
+       // int count = 0;
         //creates and adds 52 cards to the deck
         for (int i = 1; i <= 13; i++) {
 
 
-            // since we don't care about suits, just add four of each type of card
+
             for (int j = 0; j < 4; j++) {
-                deck.add(new Card(i));
+                Card card = new Card(i);
+
+                if (j == 0){
+                    card.setSuit("C");
+                }
+                if (j == 1 ){
+                    card.setSuit("D");
+                }
+                if (j == 2){
+                    card.setSuit("H");
+                }
+                if (j == 3 ){
+                    card.setSuit("S");
+                }
+                deck.add(card);
+
             }
+          //  count++;
+
         }
 
         shuffle();

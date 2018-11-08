@@ -58,12 +58,14 @@
     width: 25%;
     border: 5px solid black;
     float: left;
+    text-align: center;
 }
 
 .player2Div {
     width: 25%;
     border: 5px solid black;
     float: left;
+    text-align: center;
 }
 
 .column {
