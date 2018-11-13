@@ -8,8 +8,8 @@ button:focus{
     outline: none;
 }
 
-#btnHand1.focus, #btnHand2:focus{
-    border: red;
+#btnHand1:focus,#btnHand2:focus{
+    border: 3px solid darkred;
 }
 
 .btn-group {
