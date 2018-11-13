@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>Speed</title>
+    <title>Websocket test</title>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <script src="scripts/payload.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -27,7 +27,7 @@
         <textarea id="textBox" readonly ></textarea>
     </div>
     <div id="row" class="container">
-        <div id="p1Side" class="playerDiv">
+        <div id="p1Side" class="column playerDiv">
             <div id="playerName1" class="playerName" align="center">
                 <h2>Player 1</h2>
             </div>
@@ -36,6 +36,7 @@
             </div>
             <div class="playerButtonContainer">
                 <button id="btnDeal1" class="playerButton" onclick="deal()">Deal</button>
+                <button id="btnReset1" class="playerButton" onclick="reset()">Restart Game</button>
             </div>
         </div>
         <div id="cardColumn" class="column">
@@ -52,8 +53,7 @@
                 <button id="btn7" class="card" onclick="playOnMatch(this)"></button>
             </div>
         </div>
-
-        <div id="p2Side" class="player2Div">
+        <div id="p2Side" class="column playerDiv">
             <div id="playerName2" class="playerName" align="center">
                 <h2>Player 2</h2>
             </div>
@@ -62,6 +62,7 @@
             </div>
             <div class="playerButtonContainer">
                 <button id="btnDeal2" class="playerButton" onclick="deal()">Deal</button>
+                <button id="btnReset2" class="playerButton" onclick="reset()">Restart Game</button>
             </div>
 
         </div>

@@ -71,6 +71,12 @@ public class WebsocketServer{
            // game.checkForMatch(clientMessage);
         }
 
+        //Both players hit reset game
+        if (clientMessage.messageType.equals("RESET") && clientMessage.reset) {
+            clientMessage.setClientName(properties.get("playerName").toString());
+            game.setPlayerReadyToReset(clientMessage);
+        }
+
 
     }
 

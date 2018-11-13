@@ -13,8 +13,9 @@ public class ClientMessage {
     String playerName1, playerName2;
     ArrayList<Card> cardsOnBoard1, cardsOnBoard2;
     public boolean deal;
+    public boolean reset;
     Card topCard1, topCard2;
-    String placedOnCard, placedOnValue, winner;
+    String placedOnCard, placedOnValue;
 
 
     public static ClientMessage getInstance() {
@@ -28,7 +29,6 @@ public class ClientMessage {
         playerCount = 0;
         playerName1 = "Player 1";
         playerName2 = "Player 2";
-        winner = "";
     }
 
     public String getPlayerName1() {
@@ -61,14 +61,6 @@ public class ClientMessage {
 
     public void setClientName(String clientName) {
         this.clientName = clientName;
-    }
-
-    public String getWinner() {
-        return winner;
-    }
-
-    public void setWinner(String winner) {
-        this.winner = winner;
     }
 
     public String getMessageType() {
@@ -110,6 +102,10 @@ public class ClientMessage {
     public void setDeal(boolean deal) {
         this.deal = deal;
     }
+
+    public boolean getReset() { return reset; }
+
+    public void setReset(boolean reset) { this.reset = reset; }
 
     public Card getTopCard1() {
         return topCard1;
@@ -154,6 +150,7 @@ public class ClientMessage {
                 ", cardsOnBoard1=" + cardsOnBoard1 +
                 ", cardsOnBoard2=" + cardsOnBoard2 +
                 ", deal=" + deal +
+                ", reset=" + reset +
                 ", topCard1=" + topCard1 +
                 ", topCard2=" + topCard2 +
                 ", placedOnCard='" + placedOnCard + '\'' +

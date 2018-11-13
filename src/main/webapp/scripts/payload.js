@@ -1,10 +1,12 @@
 var btnDeal1, btnDeal2;
+var btnReset1, btnReset2;
 var textBox = null;
 var textMessage = null;
 var payload = "";
 var webSocket = null;
 var name = "";
 var btnjoingame;
+var track;
 
 var playerName1;
 var playerName2;
@@ -25,6 +27,8 @@ window.onload = function (ev)  {
     console.log("windows on load");
     btnDeal1 = document.getElementById("btnDeal1");
     btnDeal2 = document.getElementById("btnDeal2");
+    btnReset1 = document.getElementById("btnReset1");
+    btnReset2 = document.getElementById("btnReset2");
     console.log("Deal buttons loaded");
     textBox = document.getElementById("textBox");
 
@@ -33,6 +37,10 @@ window.onload = function (ev)  {
     btnHand1 = document.getElementById("btnHand1");
     btnHand2 = document.getElementById("btnHand2");
 
+    track = false;
+
+    player1Reset = false;
+    player2Reset = false;
 
     playerName1 = document.getElementById("playerName1");
     playerName2 = document.getElementById("playerName2");
@@ -41,22 +49,11 @@ window.onload = function (ev)  {
     btnDeal2.style.visibility = "hidden";
     btnDeal1.style.visibility = "hidden";
 
+    btnReset1.style.visibility = "hidden";
+    btnReset2.style.visibility = "hidden";
+
     btnHand1.style.visibility = "hidden";
     btnHand2.style.visibility = "hidden";
-
-    window.setInterval(function () {
-        var element = document.getElementById("textBox");
-        element.scrollTop = element.scrollHeight;
-    }, 1000);
-
-    $("btnHand1").click(function () {
-        $("btnHand1").toggleClass("highlight");
-    })
-    $("btnHand2").click(function () {
-        $("btnHand2").toggleClass("highlight");
-    })
-
-
 
 };
 
@@ -66,6 +63,14 @@ function deal() {
     messageObj.messageType = "DEAL";
     messageObj.deal = "true";
     // var payload = { messageType: 'DEAL', deal: 'true' };
+    webSocket.send(JSON.stringify(messageObj));
+}
+
+function reset() {
+    console.log("reset(): player wants to reset game");
+
+    messageObj.messageType = "RESET";
+    messageObj.reset = "true";
     webSocket.send(JSON.stringify(messageObj));
 }
 
@@ -91,7 +96,7 @@ function addPlayer(){
             webSocket = new WebSocket("ws://"+ window.location.host +"/websocketServer");
         }
         else {
-            webSocket = new WebSocket("wss://californiaspeed.azurewebsites.net/websocketServer");
+            webSocket = new WebSocket("wss://webapp-181015200915.azurewebsites.net/websocketServer");
         }
 
         webSocket.onopen = function (ev) { processOpen(ev) };
@@ -136,21 +141,29 @@ function processMessage(message) {
         }
     }
    if (messageType === "PLACED" && playerCount > 1 ) {
-       textBox.value += playerName + " placed a card " + "\n";
+       textBox.value += playerName + " placed a card: " + messageObj.value + " " + messageObj.value + "\n";
    }
   
     if (messageType === "MATCH" && playerCount > 1){
-        textBox.value += playerName + " completed a Match " + "\n";
+        textBox.value += playerName + " completed a Match: " + messageObj.topCard1.value + " " + messageObj.topCard2.value + "\n";
     }
    if (messageType === "DEAL"){
-       textBox.value += "*********\n" + messageObj.clientName +" Cannot find match.\n*********\n";
+       textBox.value +=  messageObj.clientName +" Cannot find match.\n";
        //console.log(messageObj.clientName + " cannot find matching cards.");
+   }
+   if (messageType === "RESET") {
+       textBox.value += messageObj.clientName + " wants to reset the game.\n";
+       if (track == true) {
+           textBox.value = "The game has been reset!\n";
+           track = false;
+       }
+       track = true;
    }
    if (messageType === "REJECT" && playerCount > 1) {
         textBox.value += playerName + " tried to place a card but was rejected\n";
     }
     if (messageType === "WINNER" && playerCount > 1) {
-        textBox.value += messageObj.winner + " IS THE WINNER!!!\n";
+        textBox.value += playerName + " IS THE WINNER!!!\n";
     }
 
    console.log(messageObj);
@@ -169,6 +182,7 @@ function showHideHand(message) {
     if (name === message.playerName1){
         btnHand1.style.visibility = "visible";
         btnDeal1.style.visibility = "visible";
+        btnReset1.style.visibility = "visible";
 
     }
 
@@ -176,6 +190,7 @@ function showHideHand(message) {
 
         btnHand2.style.visibility = "visible";
         btnDeal2.style.visibility = "visible";
+        btnReset2.style.visibility = "visible";
     }
 }
 
@@ -186,7 +201,28 @@ function setNames(message) {
 }
 
 function updateBoard(message) {
+    //TODO remove all these unless you want to keep them
+    //TODO uncomment these when you want to test the suits
+    /*
+    document.getElementById("btn0").innerText = message.cardsOnBoard1[0].suit + message.cardsOnBoard1[0].value;
+    document.getElementById("btn1").innerText =  message.cardsOnBoard1[1].suit + message.cardsOnBoard1[1].value;
+    document.getElementById("btn2").innerText =  message.cardsOnBoard1[2].suit + message.cardsOnBoard1[2].value;
+    document.getElementById("btn3").innerText =  message.cardsOnBoard1[3].suit + message.cardsOnBoard1[3].value;
 
+    document.getElementById("btn4").innerText = message.cardsOnBoard2[0].suit + message.cardsOnBoard2[0].value;
+    document.getElementById("btn5").innerText =  message.cardsOnBoard2[1].suit + message.cardsOnBoard2[1].value;
+    document.getElementById("btn6").innerText =  message.cardsOnBoard2[2].suit + message.cardsOnBoard2[2].value;
+    document.getElementById("btn7").innerText = message.cardsOnBoard2[3].suit + message.cardsOnBoard2[3].value;
+    */
+    document.getElementById("btn0").innerText = message.cardsOnBoard1[0].value;
+    document.getElementById("btn1").innerText = message.cardsOnBoard1[1].value;
+    document.getElementById("btn2").innerText = message.cardsOnBoard1[2].value;
+    document.getElementById("btn3").innerText = message.cardsOnBoard1[3].value;
+
+    document.getElementById("btn4").innerText = message.cardsOnBoard2[0].value;
+    document.getElementById("btn5").innerText = message.cardsOnBoard2[1].value;
+    document.getElementById("btn6").innerText = message.cardsOnBoard2[2].value;
+    document.getElementById("btn7").innerText = message.cardsOnBoard2[3].value;
 
 
     $('#btn0').css('background-image', 'url(' + getCardImage(message,1,0) + ')');
@@ -203,20 +239,15 @@ function updateBoard(message) {
 // return the image path for the given card
 function getCardImage(message, player, index) {
     var cardImage = '';
-    var val, suit;
     // need to know which array to access
-    if (player === 1) {
-        val = message.cardsOnBoard1[index].value;
-        suit = message.cardsOnBoard1[index].suit;
+    if (player == 1) {
+        var val = message.cardsOnBoard1[index].value;
     }
     else {
-        val = message.cardsOnBoard2[index].value;
-        suit = message.cardsOnBoard2[index].suit;
+        var val = message.cardsOnBoard2[index].value;
     }
-
-   // console.log("card  "+suit + val);
-    cardImage = '/img/cards/' + suit + val + '.png';
-
+    //TODO swap out 'C' for message.suit
+    cardImage = '/img/cards/' + 'C' + val + '.png';
     return cardImage;
 }
 

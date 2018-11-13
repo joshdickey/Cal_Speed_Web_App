@@ -4,12 +4,14 @@ public class Player extends Hand{
     private Hand hand;
     private String name;
     private boolean deal;
+    private boolean reset;
     private String currClick, lastClick;
     private Card currentClicked, lastClicked;
     private Card lastPlaced;
 
     public Player(){
         deal = true;
+        reset = false;
         currClick = "";
         lastClick = "";
         currentClicked = new Card();
@@ -25,11 +27,13 @@ public class Player extends Hand{
         return deal;
     }
 
+    public boolean isReset() {return reset;}
+
     public void setDeal(boolean deal) {
         this.deal = deal;
     }
 
-
+    public void setReset(boolean reset) {this.reset = reset;}
 
     public Card drawOne(){
         return hand.drawTopCard();
@@ -101,6 +105,7 @@ public class Player extends Hand{
                 "hand=" + hand +
                 ", name='" + name + '\'' +
                 ", deal=" + deal +
+                ", reset=" + reset +
                 ", currClick='" + currClick + '\'' +
                 ", lastClick='" + lastClick + '\'' +
                 ", currentClicked=" + currentClicked.toString() +
