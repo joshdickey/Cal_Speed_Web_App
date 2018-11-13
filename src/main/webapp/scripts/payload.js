@@ -44,6 +44,20 @@ window.onload = function (ev)  {
     btnHand1.style.visibility = "hidden";
     btnHand2.style.visibility = "hidden";
 
+    window.setInterval(function () {
+        var element = document.getElementById("textBox");
+        element.scrollTop = element.scrollHeight;
+    }, 1000);
+
+    $("btnHand1").click(function () {
+        $("btnHand1").toggleClass("highlight");
+    })
+    $("btnHand2").click(function () {
+        $("btnHand2").toggleClass("highlight");
+    })
+
+
+
 };
 
 function deal() {
@@ -129,7 +143,7 @@ function processMessage(message) {
         textBox.value += playerName + " completed a Match " + "\n";
     }
    if (messageType === "DEAL"){
-       textBox.value +=  messageObj.clientName +" Cannot find match.\n";
+       textBox.value += "*********\n" + messageObj.clientName +" Cannot find match.\n*********\n";
        //console.log(messageObj.clientName + " cannot find matching cards.");
    }
    if (messageType === "REJECT" && playerCount > 1) {
@@ -172,19 +186,6 @@ function setNames(message) {
 }
 
 function updateBoard(message) {
-    //TODO remove all these unless you want to keep them
-    //TODO uncomment these when you want to test the suits
-
-
-    // document.getElementById("btn0").innerText = message.cardsOnBoard1[0].suit + message.cardsOnBoard1[0].value;
-    // document.getElementById("btn1").innerText =  message.cardsOnBoard1[1].suit + message.cardsOnBoard1[1].value;
-    // document.getElementById("btn2").innerText =  message.cardsOnBoard1[2].suit + message.cardsOnBoard1[2].value;
-    // document.getElementById("btn3").innerText =  message.cardsOnBoard1[3].suit + message.cardsOnBoard1[3].value;
-    //
-    // document.getElementById("btn4").innerText = message.cardsOnBoard2[0].suit + message.cardsOnBoard2[0].value;
-    // document.getElementById("btn5").innerText =  message.cardsOnBoard2[1].suit + message.cardsOnBoard2[1].value;
-    // document.getElementById("btn6").innerText =  message.cardsOnBoard2[2].suit + message.cardsOnBoard2[2].value;
-    // document.getElementById("btn7").innerText = message.cardsOnBoard2[3].suit + message.cardsOnBoard2[3].value;
 
 
 

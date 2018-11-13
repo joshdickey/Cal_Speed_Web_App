@@ -4,6 +4,14 @@
     display: inline-block;
 }
 
+button:focus{
+    outline: none;
+}
+
+#btnHand1.focus, #btnHand2:focus{
+    border: red;
+}
+
 .btn-group {
     width: 100%;
 }

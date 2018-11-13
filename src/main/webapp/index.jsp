@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>Websocket test</title>
+    <title>Speed</title>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <script src="scripts/payload.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
