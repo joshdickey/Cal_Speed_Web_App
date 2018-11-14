@@ -105,7 +105,6 @@ public class Player extends Hand{
                 "hand=" + hand +
                 ", name='" + name + '\'' +
                 ", deal=" + deal +
-                ", reset=" + reset +
                 ", currClick='" + currClick + '\'' +
                 ", lastClick='" + lastClick + '\'' +
                 ", currentClicked=" + currentClicked.toString() +

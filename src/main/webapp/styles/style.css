@@ -4,6 +4,14 @@
     display: inline-block;
 }
 
+button:focus{
+    outline: none;
+}
+
+#btnHand1:focus,#btnHand2:focus{
+    border: 3px solid darkred;
+}
+
 .btn-group {
     width: 100%;
 }
@@ -55,13 +63,22 @@
 }
 
 .playerDiv {
-    width: 40%;
+    width: 25%;
     border: 5px solid black;
+    float: left;
+    text-align: center;
+}
+
+.player2Div {
+    width: 25%;
+    border: 5px solid black;
+    float: left;
+    text-align: center;
 }
 
 .column {
     float: left;
-    width: 30%;
+    width: 45%;
     text-align: center;
 }
 

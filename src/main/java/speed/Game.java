@@ -96,12 +96,10 @@ public class Game {
             player1.setName(clientMessage.getClientName());
             player2.setName(clientMessage.getPlayerName2());
             player1.setDeal(true);
-            player1.setReset(false);
             updateGame(clientMessage);
         }
         if (clientMessage.getPlayerCount() == 2){
             player2.setDeal(true);
-            player2.setReset(false);
             player2.setName(clientMessage.getClientName());
             //game now has 2 players and is ready to be set up
             setupGame();
@@ -168,8 +166,20 @@ public class Game {
             //players deal 4 each on board
             for (int i = 0; i < 4; i++) {
 
-                Card temp1 = player1.drawOne();
-                Card temp2 = player2.drawOne();
+                Card temp1 = null;
+                Card temp2 = null;
+                if (player1.getHand().getHandCount() > 1 ) {
+                    temp1 = player1.drawOne();
+                }else{
+                    clientMessage.setMessageType("WINNER");
+                    clientMessage.setWinner(player1.getName());
+                }
+                if (player2.getHand().getHandCount() > 1 ) {
+                    temp2 = player2.drawOne();
+                }else{
+                    clientMessage.setMessageType("WINNER");
+                    clientMessage.setWinner(player2.getName());
+                }
 
                 //adds cards from players hand to boardHand
                 boardHand1.addCardToHand(temp1);
@@ -184,13 +194,13 @@ public class Game {
 
             }
 
-            flagMatches();
 
-            System.out.println("dealCards() HashMap: " + hashMap);
+            if(clientMessage.getWinner().equals("")){
+                flagMatches();
+                System.out.println("dealCards() HashMap: " + hashMap);
+            }
 
-            //set the 8 cards that go on the board in the payload to be sent to the client
-           // clientMessage.setCardsOnBoard1(boardHand1.getPlayersHand());
-           // clientMessage.setCardsOnBoard2(boardhand2.getPlayersHand());
+
             //flag that the players are no longer ready to deal out cards
             player1.setDeal(false);
             player2.setDeal(false);
@@ -200,6 +210,7 @@ public class Game {
 
         }
 
+        //set the 8 cards that go on the board in the payload to be sent to the client
         clientMessage.setTopCard1(player1.showTopCard());
         clientMessage.setTopCard2(player2.showTopCard());
         updateGame(clientMessage);
@@ -289,6 +300,7 @@ public class Game {
         }
         if (currPlayer.getHand().getHandCount() == 0){
             clientMessage.setMessageType("WINNER");
+            clientMessage.setWinner(currPlayer.getName());
         }else{
             clientMessage.setTopCard1(player1.showTopCard());
             clientMessage.setTopCard2(player2.showTopCard());
@@ -340,6 +352,13 @@ public class Game {
                 clientMessage.setCardsOnBoard2(boardhand2.getPlayersHand());
             }
         }
+
+    }
+
+
+    private void resetGame(ClientMessage message){
+        player1.getHand().setHandCount(0);
+        player2.getHand().setHandCount(0);
 
     }
 /*

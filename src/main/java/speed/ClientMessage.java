@@ -15,7 +15,7 @@ public class ClientMessage {
     public boolean deal;
     public boolean reset;
     Card topCard1, topCard2;
-    String placedOnCard, placedOnValue;
+    String placedOnCard, placedOnValue, winner;
 
 
     public static ClientMessage getInstance() {
@@ -29,6 +29,7 @@ public class ClientMessage {
         playerCount = 0;
         playerName1 = "Player 1";
         playerName2 = "Player 2";
+        winner = "";
     }
 
     public String getPlayerName1() {
@@ -61,6 +62,14 @@ public class ClientMessage {
 
     public void setClientName(String clientName) {
         this.clientName = clientName;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 
     public String getMessageType() {
